@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,62 +54,40 @@ public class ProfilePage {
 	@FindBy(how = How.XPATH, using = "//a[@class='giTrackElementHeader' and @data-button-name='My Profile']")
 	private WebElement myProfileBtn;
 
+	@FindBy(how = How.XPATH, using = "//a[@href='/my-profile/career-service']")
+	private WebElement careerServiceBtn;
+
 	@FindBy(how = How.XPATH, using = "(//i[@class='icon-pr-edit'])[2]")
 	private WebElement editBtn;
 
-	@FindBy(how = How.XPATH, using = "(//button[@class='ngx-dropdown-button' and @type='button'])[1]")
-	private WebElement expDropdownBtn;
+	@FindBy(how = How.XPATH, using = "//select[@class='form-control form-element ng-pristine ng-valid ng-touched']")
+	private WebElement currentJobBtn;
 
 	@FindBy(how = How.XPATH, using = "(//button[@class='ngx-dropdown-button' and @type='button'])[2]")
 	private WebElement industryDropdownBtn;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='wzrk-overlay']")
+	@FindBy(how = How.XPATH, using = "//button[@id='wzrk-cancel']")
 	private WebElement overlay;
+	//ul[@class='available-items']//li[contains(text(), '4-7 years')]
 
-	public void updatePersonalDetails(String experience, String industryName) throws InterruptedException {
+	public void updatePersonalDetails() throws InterruptedException {
 		commonUtils.waitForElement(driver, profileBtn, 2);
 		profileBtn.click();
 		Thread.sleep(2000);
 		commonUtils.waitForElement(driver, myProfileBtn, 2);
 		myProfileBtn.click();
 		Thread.sleep(2000);
+		commonUtils.waitForElement(driver, careerServiceBtn, 2);
+		careerServiceBtn.click();
+		Thread.sleep(2000);
 		commonUtils.waitForElement(driver, editBtn, 2);
 		editBtn.click();
 		Thread.sleep(2000);
+		commonUtils.waitForElement(driver, currentJobBtn, 2);
+		currentJobBtn.click();
+		Thread.sleep(2000);
 		commonUtils.scrollDown(driver);
 		Thread.sleep(2000);
-		selectFrmDrpDwn(experience, expDropdownBtn);
-		Thread.sleep(5000);
-		//commonUtils.waitForElement(driver, overlay, 10);
-
-		selectFrmDrpDwn(industryName, industryDropdownBtn);
-		Thread.sleep(5000);
-
-	}
-
-	public WebElement findElementByXPath(String xpath) {
-		return driver.findElement(By.xpath(xpath));
-	}
-
-	public void selectFrmDrpDwn(String exp, WebElement element) throws InterruptedException {
-		CommonUtils.waitForElement(driver, element, 2);
-		element.click();
-		Thread.sleep(2000);
-		//		//		Select select = new Select(expDropdownBtn);
-		//		//		select.selectByVisibleText(exp);
-		//		Actions actions = new Actions(driver);
-		//		if (element.isDisplayed()) {
-		//			element.sendKeys(Keys.ARROW_DOWN);
-		//			//System.out.println(text);
-		//			while (!element.getText().equals(exp)) {
-		//				System.out.println(element.getText());
-		//				actions.sendKeys(Keys.ARROW_DOWN).perform();
-		//			}
-		//			actions.sendKeys(Keys.ENTER).perform();
-		//		}
-		WebElement desiredOption = findElementByXPath(
-				"//ul[@class='available-items']//li[contains(text(), '" + exp + "')]");
-		desiredOption.click();
 
 	}
 }
